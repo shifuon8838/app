@@ -29,7 +29,7 @@ if(tab==='events'){x.date=$('fDate').value;x.time=$('fTime').value;x.category=$(
 if(tab==='notes')x.category=$('fCategory').value;
 if(old)Object.assign(old,x);else data[c].unshift(x);saveLocal();$('form').classList.add('hidden');editingId=null;render()};
 document.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{tab=b.dataset.tab;editingId=null;$('form').classList.add('hidden');render()});
-$('saveConfig').onclick=()=>{const url=$('projectUrl').value.trim().replace(/\/$/,''),key=$('anonKey').value.trim();if(url&&!/^https:\/\/[a-z0-9.-]+\.supabaseClient\.co$/i.test(url)){alert('Supabase Project URLを確認してね');return}config={url,key};localStorage.setItem(CFG,JSON.stringify(config));setupClient();alert('設定を保存したよ')};
+$('saveConfig').onclick=()=>{const url=$('projectUrl').value.trim().replace(/\/$/,''),key=$('anonKey').value.trim();if(url&&!/^https:\/\/[a-z0-9.-]+\.supabase\.co$/i.test(url)){alert('Supabase Project URLを確認してね');return}config={url,key};localStorage.setItem(CFG,JSON.stringify(config));setupClient();alert('設定を保存したよ')};
 $('forgetConfig').onclick=()=>{if(confirm('この端末の接続設定を消去する？')){localStorage.removeItem(CFG);config={};setupClient()}};
 $('signIn').onclick=async()=>{if(!supabaseClient)return alert('先にSupabaseの接続設定を保存してね');const {data,error}=await supabaseClient.auth.signInWithPassword({email:$('email').value,password:$('password').value});if(error)alert(error.message);else{session=data.session;setStatus('ログイン済み')}};
 $('signUp').onclick=async()=>{if(!supabaseClient)return alert('先にSupabaseの接続設定を保存してね');const {error}=await supabaseClient.auth.signUp({email:$('email').value,password:$('password').value});alert(error?error.message:'登録メールを確認してね。メール確認を有効にしている場合は認証が必要だよ。')};
